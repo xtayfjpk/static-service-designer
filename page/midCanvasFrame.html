@@ -1,0 +1,146 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html style="width:100%;height:100%;">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>服务编排区域</title>
+    <link rel="stylesheet" type="text/css" href="../js-lib/bootstrap/css/bootstrap.css">
+    <script type="text/javascript" src="../js-lib/jquery/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="../js-lib/bootstrap/bootstrap.min.js"></script>
+
+    <script type="text/javascript" src="../js-lib/jquery/jquery-1.3.2.js"></script>
+    <script type="text/javascript">
+        jQuery.noConflict();
+    </script>
+    <script type="text/javascript" src="../js-lib/raphael/raphael-1.5.2.min.js"></script>
+    <script type="text/javascript" src="../js/editor.js"></script>
+    <script type="text/javascript" src="../js/PropertyDefinition.js"></script>
+    <script type="text/javascript" src="../js/ComponentDefinition.js"></script>
+    <script type="text/javascript" src="../js/designer.js"></script>
+    <script type="text/javascript" src="../js/data.js"></script>
+    <script type="text/javascript" src="../js/mid-canvas-frame.js"></script>
+    <style type="text/css">
+        button.arrayorlist-config, button.map-config, button.ref-config {
+            margin-left: 5px;
+        }
+        div.props-config-form {
+            overflow: auto;
+            height: auto;
+            max-height: 450px;
+        }
+        div.form-group {
+            margin: 0;
+            padding: 0;
+            margin-top: 5px;
+            height: 35px;
+        }
+        label.control-label {
+            margin: 0;
+            padding: 0;
+            text-align: right;
+        }
+        #proxy {
+            border:1px solid #ccc;
+            width:auto;
+            background:#fafafa;
+        }
+    </style>
+</head>
+
+
+<body style="width:100%;height:100%;">
+<div class="row" style="width:100%;height:100%;margin:0;">
+    <div class="col-sm-9" style="height:100%;padding:0;">
+        <div id="service_design_nav_tab" style="width:100%;background-color: #d9edf7;">
+            <ul class="nav nav-tabs nav-pills" role="tablist">
+                <li role="presentation" class="active">
+                    <a href="#audio-graph">
+                        <span class="glyphicon glyphicon-list-alt"></span> 新建服务1
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div id="service_design_content" class="tab-content" style="width:100%;height:100%;">
+            <div class="tab-pane active" id="audio-graph" name="audio-graph"  style="width:100%;height:100%;padding:0 0 0 0;"></div>
+        </div>
+        <!-- <div class="panel panel-info " style="width:100%;height:100%;">
+            <div class="panel-heading">
+                <span class="glyphicon glyphicon-pencil"></span> 编排服务
+            </div>
+            <div class="panel-body" style="padding:0;height:100%;">
+                <div id="audio-graph" style="width:100%;height:100%;padding:0 0 0 0;"></div>
+            </div>
+        </div> -->
+    </div>
+    <div class="col-sm-3" style="padding: 0;padding-right: 5px;height:100%;">
+        <div class="panel panel-primary" id="comp-form-panel" style="height:100%;">
+            <div class="panel-heading" >
+                <span class="glyphicon glyphicon-edit"></span> 组件属性
+            </div>
+            <div class="panel-body props-config-form"  style="margin: 0;margin-bottom:20px;width: 100%;height:70%;">
+            </div>
+            <div style="padding: 10px;height:20%;" >
+                <textarea class="form-control prop-tip" readonly="readonly"></textarea>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- -----------弹出窗口---------- -->
+<div class="modal fade" id="ref-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" style="width: 450px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">引用属性配置</h4>
+            </div>
+            <div class="modal-body props-config-form" style="height:auto;max-height: 300px;">
+            </div>
+            <div style="padding: 10px;" >
+                <textarea class="form-control prop-tip" readonly="readonly"></textarea>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+
+<div id="proxy" style="position: absolute;display: none"></div>
+</body>
+
+<script type="text/javascript">
+    function removeTab(id){
+        $('#service_design_nav_tab ul li[name='+id+']').remove();
+        $("#"+id).remove();
+        $("#service_design_nav_tab ul li:first a").tab('show');
+    };
+    function addTabAndActive(tab,content){
+        $("#service_design_nav_tab ul").append(tab);
+        $("#service_design_content").append(content);
+
+        $("#service_design_nav_tab ul li:last a").click(function (e) {
+            e.preventDefault();
+            $(this).tab('show');
+        }).tab('show');
+    };
+    function createCloseTip(id){
+        return '<div style="width:5px;height:5px;position:absolute;top:0px;right:7px;cursor:pointer;" onclick="removeTab(\''+id+'\')"><font color="red">X</font></div>';
+    };
+    $(function(){
+        $('#service_design_nav_tab ul li a').click(function (e) {
+            e.preventDefault();
+            $(this).tab('show');
+        });
+    });
+
+
+    function addService(){
+        var id	="addService-"+ new Date().getTime();
+        var tab 	= "<li role='presentation' name='"+id+"'><a name='"+id+"' href='#"+id+"'><span class='glyphicon glyphicon-th-list' ></span> 新建服务2</a>"+createCloseTip(id)+"</li>";
+        var content = "<div class='tab-pane' id='"+id+"'>"+""+"</div>";
+        addTabAndActive(tab,content);
+        //
+    };
+</script>
+</html>

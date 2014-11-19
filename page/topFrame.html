@@ -1,0 +1,108 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html style="width:100%;height:100%;">
+<head>
+    <title>顶部按钮栏</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link rel="stylesheet" type="text/css" href="../js-lib/bootstrap/css/bootstrap.css">
+    <script type="text/javascript" src="../js-lib/jquery/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="../js-lib/bootstrap/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../js/top-frame.js"></script>
+
+    <style type="text/css">
+        body .panel .panel-body {
+            background-image	: url(../sketch/images/top-wrap-bg.png);
+            background-repeat	: repeat-x;
+            background-position : 0px 0px;
+
+        }
+        #div-design-logo {
+            background-image	: url(../sketch/images/top-logo.png);
+            background-repeat	: no-repeat;
+            background-position : 0px 0px;
+            height:50px;
+        }
+        #div-operations {
+            padding-top:20px;
+            height:50px;
+        }
+        #div-operations button {
+            width : 28px;
+            height: 30px;
+            margin-left:3px;
+            background-image:url(../sketch/icons/tool1.png);
+            background-repeat: no-repeat;
+            background-color:transparent;
+            border: 0;
+        }
+        #create-service-definition-button {
+            background-position:-140px -104px;
+        }
+        #output-service-definition-button {
+            background-position:-140px -72px;
+        }
+        #remove-service-definition-button {
+            background-position:-191px -40px;
+        }
+        #load-service-definition-button {
+            background-position:-400px -43px;
+        }
+        #deploy-service-definition-button {
+            background-position:-400px -11px;
+        }
+        #save-service-definition-button {
+            background-position:-140px -136px;
+        }
+        #reset-service-definition-button {
+            background-position:-140px -8px;
+        }
+        #refresh-canvas-button {
+            background-position:-87px -104px;
+        }
+        #edit-service-definition-button {
+            background-position:-296px -200px;
+        }
+        #remove-component-definition-button {
+            background-position:-296px -168px;
+        }
+
+        #reset-component-definition-button {
+            background-position:-296px -8px;
+        }
+    </style>
+</head>
+<body style="width:100%;height:100%;">
+	<div class="panel panel-info">
+		<div class="panel-body" style="padding:0;margin:0px 5px 0px 5px;">
+			<div class="row" style="margin-left:5px;">
+				<div id="div-design-logo" class="col-sm-3" ></div>
+        		<div id="div-operations"  class="col-sm-9">
+        			<button type="button" id="create-service-definition-button" title="新建服务"></button>
+        			<button type="button" id="output-service-definition-button" title="输出服务"></button>
+       				<button type="button" id="remove-service-definition-button" title="移除服务"></button>
+        			<button type="button" id="load-service-definition-button" 	title="加载服务"></button>
+        			<button type="button" id="deploy-service-definition-button" title="发布服务"></button>
+        			<button type="button" id="save-service-definition-button"   title="保存服务"></button>
+        			<button type="button" id="reset-service-definition-button"  title="服务重置"></button>
+        		
+        			<button type="button" id="refresh-canvas-button" title="刷新画板"></button>
+        		
+        			<button type="button" id="edit-service-definition-button" title="编辑服务定义"></button>
+        			<button type="button" id="remove-component-definition-button" title="移除组件"></button>
+        			<button type="button" id="reset-component-definition-button" title="组件重置"></button>
+        		</div>
+        	</div>
+    	</div>
+    </div>
+    
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+   <div class="modal-dialog">
+   </div>
+</div>
+</body>
+<script type="text/javascript">
+    $("#create-service-definition-button").click(function(e){
+        window.top.midCavasFrame.addService();
+    });
+</script>
+</html>
